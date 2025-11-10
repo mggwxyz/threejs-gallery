@@ -50,20 +50,6 @@
 		<div class="p-6">
 			<h1 class="text-2xl font-bold mb-8 text-cyan-400">Three.js Gallery</h1>
 
-			<!-- Home link -->
-			<div class="mb-6">
-				<a
-					href="/"
-					class={`block px-4 py-2 rounded-lg transition-colors ${
-						$page.url.pathname === '/'
-							? 'bg-cyan-600 text-white'
-							: 'hover:bg-gray-700'
-					}`}
-				>
-					🏠 Home
-				</a>
-			</div>
-
 			<!-- Gallery sections -->
 			<div class="space-y-2">
 				<h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Examples</h2>
