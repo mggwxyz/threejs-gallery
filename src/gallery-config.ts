@@ -4,6 +4,7 @@ import * as cameras from './gallery/cameras';
 import * as transformObjects from './gallery/transform-objects';
 import * as animation from './gallery/animation';
 import * as textures from './gallery/textures';
+import * as threeDText from './gallery/3d-text';
 
 export type GalleryModule = {
   default: (canvas: HTMLCanvasElement) => (() => void) | undefined;
@@ -46,6 +47,12 @@ export const galleryItems: GalleryItem[] = [
     title: 'Textures',
     description: 'Explore different types of textures',
     module: textures
+  },
+  {
+    id: '3d-text',
+    title: '3D Text',
+    description: 'Create 3D text with various fonts and styles',
+    module: threeDText
   }
 ];
 
