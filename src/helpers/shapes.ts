@@ -34,7 +34,7 @@ export interface CreateSphereOptions {
 }
 
 export function createSphere(options: CreateSphereOptions) {
-  const { size = 1, color, position = { x: 0, y: 0, z: 0 }, map } = options;
+  const { size = 1, color, position = { x: 0, y: 0, z: 0 }, map} = options;
 
   const geometry = new THREE.SphereGeometry(size, 32, 32);
   const material = new THREE.MeshStandardMaterial({
@@ -44,7 +44,7 @@ export function createSphere(options: CreateSphereOptions) {
   const sphere = new THREE.Mesh(geometry, material);
 
   sphere.position.x = position.x || 0;
-  sphere.position.y = position.y || size / 2;
+  sphere.position.y = position?.y || size / 2;
   sphere.position.z = position.z || 0;
 
   sphere.castShadow = true;

@@ -1,10 +1,11 @@
 // Import all gallery modules
-import * as basicCube from './gallery/basic-cube';
-import * as cameras from './gallery/cameras';
-import * as transformObjects from './gallery/transform-objects';
-import * as animation from './gallery/animation';
-import * as textures from './gallery/textures';
-import * as threeDText from './gallery/3d-text';
+import * as basicCube from './basic-cube';
+import * as cameras from './cameras';
+import * as transformObjects from './transform-objects';
+import * as animation from './animation';
+import * as textures from './textures';
+import * as threeDText from './3d-text';
+import * as physics from './physics';
 
 export type GalleryModule = {
   default: (canvas: HTMLCanvasElement) => (() => void) | undefined;
@@ -53,6 +54,12 @@ export const galleryItems: GalleryItem[] = [
     title: '3D Text',
     description: 'Create 3D text with various fonts and styles',
     module: threeDText
+  },
+  {
+    id: 'physics',
+    title: 'Physics',
+    description: 'Explore physics-based interactions with three.js',
+    module: physics
   }
 ];
 
