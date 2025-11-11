@@ -1,29 +1,44 @@
+// Import all gallery modules
+import * as basicCube from '../gallery/basic-cube';
+import * as cameras from '../gallery/cameras';
+import * as transformObjects from '../gallery/transform-objects';
+import * as animation from '../gallery/animation';
+
+export type GalleryModule = {
+  default: (canvas: HTMLCanvasElement) => (() => void) | undefined;
+};
+
 export interface GalleryItem {
   id: string;
   title: string;
   description: string;
+  module: GalleryModule;
 }
 
 export const galleryItems: GalleryItem[] = [
   {
     id: 'basic-cube',
     title: 'Basic Cube',
-    description: ''
+    description: 'A simple rotating cube with orbit controls and a floor',
+    module: basicCube
   },
   {
     id: 'cameras',
-    title: 'Camera Types',
-    description: 'Explore perspective and orthographic camera types with various shapes'
+    title: 'Cameras',
+    description: 'Explore perspective and orthographic camera types with various shapes',
+    module: cameras
   },
   {
-    id: 'transform-cube',
-    title: 'Transform Controls',
-    description: 'Interactive transform controls for position, rotation, and scale'
+    id: 'transform-objects',
+    title: 'Transform Objects',
+    description: 'Interactive transform controls for position, rotation, and scale',
+    module: transformObjects
   },
   {
-    id: 'gsap-animation',
-    title: 'GSAP Animations',
-    description: 'Complex timeline animations with multiple cubes using GSAP'
+    id: 'animation',
+    title: 'Animation',
+    description: 'Complex timeline animations with multiple cubes using GSAP',
+    module: animation
   }
 ];
 

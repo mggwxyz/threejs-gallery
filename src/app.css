@@ -1,3 +1,2 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+/* Import Pico CSS */
+@import '@picocss/pico/css/pico.conditional.min.css';

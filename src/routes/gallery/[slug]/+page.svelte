@@ -1,28 +1,18 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import { page } from '$app/stores';
-	import { getGalleryItem } from '$lib/gallery-config';
+	import { onDestroy } from 'svelte';
+	import { page } from '$app/state';
+	import { getGalleryItem, type GalleryItem } from '$lib/gallery-config';
 
-	// Import all gallery modules
-	import * as basicCube from '$lib/../gallery/basic-cube';
-	import * as cameras from '$lib/../gallery/cameras';
-	import * as transformCube from '$lib/../gallery/transform-cube';
-	import * as gsapAnimation from '$lib/../gallery/gsap-animation';
+	const slug = $state(page.params.slug);
 
 	let canvas: HTMLCanvasElement;
+	let item: GalleryItem | undefined = $state(slug ? getGalleryItem(slug) : undefined);
 	let cleanup: (() => void) | undefined;
 
-	const modules: Record<string, any> = {
-		'basic-cube': basicCube,
-		'cameras': cameras,
-		'transform-cube': transformCube,
-		'gsap-animation': gsapAnimation
-	};
-
-	$: item = $page.params.slug ? getGalleryItem($page.params.slug) : undefined;
 
 	// Function to initialize the current gallery module
 	function initializeGallery(slug: string) {
+		console.log('initializeGallery', slug);
 		// Clean up previous instance
 		if (cleanup) {
 			cleanup();
@@ -35,10 +25,10 @@
 
 		// Get the gallery item
 		const galleryItem = getGalleryItem(slug);
+		item = galleryItem;
 		if (!galleryItem || !canvas) return;
 
-		const module = modules[galleryItem.id];
-		if (!module || !module.default) {
+		if (!galleryItem.module || !galleryItem.module.default) {
 			console.error(`Module not found for: ${galleryItem.id}`);
 			return;
 		}
@@ -46,18 +36,23 @@
 		// Small delay to ensure canvas is ready and previous GUI is fully cleaned
 		setTimeout(() => {
 			// Initialize the Three.js scene
-			cleanup = module.default(canvas);
+			cleanup = galleryItem.module.default(canvas);
 		}, 10);
 	}
 
-	// Watch for route changes and reinitialize
-	$: if (canvas && $page.params.slug) {
-		initializeGallery($page.params.slug);
-	}
+	// Use $effect to handle both initial mount and route changes
+	$effect(() => {
+		if (page.params.slug) {
+			initializeGallery(page.params.slug);
 
-	onMount(() => {
-		if ($page.params.slug && canvas) {
-			initializeGallery($page.params.slug);
+			// Return cleanup function that runs when dependencies change
+			return () => {
+				console.log('$effect cleanup');
+				if (cleanup) {
+					cleanup();
+					cleanup = undefined;
+				}
+			};
 		}
 	});
 
@@ -69,7 +64,71 @@
 	});
 </script>
 
+{#if item}
+	<div class="gallery-container">
+		<!-- Header -->
+		<div class="gallery-header pico">
+			<h1>{item.title}</h1>
+			<p>{item.description}</p>
+		</div>
+
+		<!-- Canvas container -->
+		<div class="canvas-container">
+			{#key page.params.slug}
+				<canvas bind:this={canvas} class="webgl"></canvas>
+				<!-- GUI Container -->
+				<div id="gui-container"></div>
+			{/key}
+		</div>
+	</div>
+{:else}
+	<div class="not-found pico">
+		<div class="not-found-content">
+			<h1>Example Not Found</h1>
+			<p>The requested example could not be found.</p>
+			<a href="/">Go Home</a>
+		</div>
+	</div>
+{/if}
+
 <style>
+	.gallery-container {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.gallery-header {
+		padding: 1rem;
+		& h1 {
+			font-size: 1.5rem;
+			margin-bottom: 0.5rem;
+		}
+		& p {
+			color: var(--pico-muted-color);
+			margin: 0;
+		}
+	}
+
+	.canvas-container {
+		flex: 1;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.webgl {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+
+	#gui-container {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		z-index: 10;
+	}
+
 	/* Ensure lil-gui is positioned relative to the container */
 	:global(#gui-container .lil-gui) {
 		position: relative !important;
@@ -77,33 +136,43 @@
 		right: auto !important;
 		left: auto !important;
 	}
+
+	.not-found {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--pico-background-color);
+		color: var(--pico-color);
+	}
+
+	.not-found-content {
+		text-align: center;
+		padding: 2rem;
+	}
+
+	.not-found h1 {
+		font-size: 2.5rem;
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
+
+	.not-found p {
+		color: var(--pico-muted-color);
+		margin-bottom: 2rem;
+	}
+
+	.not-found a {
+		display: inline-block;
+		padding: 0.75rem 1.5rem;
+		background-color: var(--pico-primary);
+		color: white;
+		border-radius: 0.5rem;
+		text-decoration: none;
+		transition: background-color 0.2s;
+	}
+
+	.not-found a:hover {
+		background-color: var(--pico-primary-hover);
+	}
 </style>
-
-{#if item}
-	<div class="h-full flex flex-col bg-gray-900">
-		<!-- Header -->
-		<div class="bg-gray-800 text-white p-6 shadow-lg">
-			<h1 class="text-3xl font-bold mb-2">{item.title}</h1>
-			<p class="text-gray-300">{item.description}</p>
-		</div>
-
-		<!-- Canvas container -->
-		<div class="flex-1 relative overflow-hidden">
-			{#key $page.params.slug}
-				<canvas bind:this={canvas} class="webgl w-full h-full block"></canvas>
-				<!-- GUI Container -->
-				<div id="gui-container" class="absolute top-4 right-4 z-10"></div>
-			{/key}
-		</div>
-	</div>
-{:else}
-	<div class="h-full flex items-center justify-center bg-gray-900 text-white">
-		<div class="text-center">
-			<h1 class="text-4xl font-bold mb-4">Example Not Found</h1>
-			<p class="text-gray-400 mb-8">The requested example could not be found.</p>
-			<a href="/" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 rounded-lg transition-colors">
-				Go Home
-			</a>
-		</div>
-	</div>
-{/if}

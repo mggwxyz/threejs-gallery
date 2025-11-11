@@ -11,8 +11,23 @@
 	});
 </script>
 
-<div class="h-full flex items-center justify-center bg-gray-900">
-	<div class="text-center">
-		<p class="text-gray-400">Redirecting to gallery...</p>
+<div class="redirect-container">
+	<div class="redirect-message">
+		<p>Redirecting to gallery...</p>
 	</div>
 </div>
+
+<style>
+	.redirect-container {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--pico-background-color);
+	}
+
+	.redirect-message {
+		text-align: center;
+		color: var(--pico-muted-color);
+	}
+</style>

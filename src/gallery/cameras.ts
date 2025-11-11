@@ -231,9 +231,9 @@ export default function init(canvas: HTMLCanvasElement) {
   });
 
   // Open folders
-  cameraFolder.open();
-  positionFolder.open();
-  presetFolder.open();
+  cameraFolder.close();
+  positionFolder.close();
+  presetFolder.close();
 
   // Handle window resize
   const handleResize = () => {
