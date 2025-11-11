@@ -3,6 +3,7 @@ import * as basicCube from './gallery/basic-cube';
 import * as cameras from './gallery/cameras';
 import * as transformObjects from './gallery/transform-objects';
 import * as animation from './gallery/animation';
+import * as textures from './gallery/textures';
 
 export type GalleryModule = {
   default: (canvas: HTMLCanvasElement) => (() => void) | undefined;
@@ -40,6 +41,12 @@ export const galleryItems: GalleryItem[] = [
     description: 'Explore perspective and orthographic camera types with various shapes',
     module: cameras
   },
+  {
+    id: 'textures',
+    title: 'Textures',
+    description: 'Explore different types of textures',
+    module: textures
+  }
 ];
 
 export function getGalleryItem(id: string): GalleryItem | undefined {

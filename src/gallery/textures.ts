@@ -1,26 +1,58 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createFloor } from '../helpers/floor';
-import { createCube } from '../helpers/shapes';
+import { createCube, createSphere } from '../helpers/shapes';
 
 export default function init(canvas: HTMLCanvasElement) {
+  const loadingManager = new THREE.LoadingManager();
+  /**
+   * Textures
+   */
+  const textureLoader = new THREE.TextureLoader(loadingManager);
+  const colorTexture = textureLoader.load('/textures/door/color.jpg')
+    colorTexture.colorSpace = THREE.SRGBColorSpace
+  const repeatingColorTexture = textureLoader.load('/textures/door/color.jpg')
+  repeatingColorTexture.wrapS = THREE.RepeatWrapping
+  repeatingColorTexture.wrapT = THREE.RepeatWrapping
+  repeatingColorTexture.repeat.set(4, 4)
+    const textures: THREE.Texture[] = [ colorTexture, repeatingColorTexture ];
+    for (const textureName of ['alpha', 'height', 'normal', 'ambientOcclusion', 'metalness', 'roughness']) {
+    const texture = textureLoader.load(`/textures/door/${textureName}.jpg`);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    textures.push(texture);
+    }
+
+
   // Scene setup
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('white');
 
-  // Create a basic red cube
-  const cube = createCube({ size: 2, color: new THREE.Color('red'), position: { y: 1 } });
-  scene.add(cube);
+  const cubeGroup = new THREE.Group();
+  const sphereGroup = new THREE.Group();
+
+  for (let i = 0; i < textures.length; i++) {
+    const texture = textures[i];
+    const cube = createCube({ size: 2, map: texture, position: { x: i * 3, y: 0, z: 0 } });
+    cubeGroup.add(cube);
+    const sphere = createSphere({ size: 1, map: texture, position: { x: i * 3, y: 1, z: 0 } });
+    sphereGroup.add(sphere);
+  }
+
+  cubeGroup.position.set(-10, 0, 0);
+  sphereGroup.position.set(-10, 0, -4);
+
+  scene.add(cubeGroup);
+  scene.add(sphereGroup);
 
   // Create a floor
-  const floor = createFloor(20, new THREE.Color('lightgreen'));
+  const floor = createFloor(50, new THREE.Color('lightgreen'));
   scene.add(floor);
 
   // Add lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
   directionalLight.position.set(5, 10, 5);
   directionalLight.castShadow = true;
   scene.add(directionalLight);
@@ -32,8 +64,8 @@ export default function init(canvas: HTMLCanvasElement) {
     0.1,
     1000
   );
-  camera.position.set(5, 5, 5);
-  camera.lookAt(0, 0, 0);
+  camera.position.set(0, 8, 12);
+  camera.lookAt(cubeGroup.position);
 
   // Configure Orbit Controls
   const controls = new OrbitControls(camera, canvas);

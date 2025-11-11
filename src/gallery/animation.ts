@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import gsap from 'gsap';
+import { createCube } from '../helpers/shapes';
 
 export default function init(canvas: HTMLCanvasElement) {
   // Scene setup
@@ -14,12 +15,8 @@ export default function init(canvas: HTMLCanvasElement) {
   const cubes: THREE.Mesh[] = [];
 
   for (let i = 0; i < 5; i++) {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshStandardMaterial({
-      color: colors[i],
-    });
-    const cube = new THREE.Mesh(geometry, material);
-    cube.position.x = (i - 2) * 1;
+    const cube = createCube({ size: 1, color: colors[i], position: { x: (i - 2) * 1, y: 0, z: 0 } });
+
     cubes.push(cube);
     cubeGroup.add(cube);
   }

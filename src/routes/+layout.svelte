@@ -167,7 +167,6 @@
 			font-size: 1.5rem;
 			font-weight: bold;
 			margin-bottom: 2rem;
-			color: var(--pico-primary);
 		}
 
 		& h2 {
