@@ -6,14 +6,14 @@ import { createCube } from '../helpers/shapes';
 export default function init(canvas: HTMLCanvasElement) {
   // Scene setup
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf0f0f0);
+  scene.background = new THREE.Color('lightblue');
 
   // Create a basic red cube
-  const cube = createCube(2, 0xff0000, { y: 1 });
+  const cube = createCube(2, new THREE.Color('red'), { y: 1 });
   scene.add(cube);
 
   // Create a floor
-  const floor = createFloor(20, 0x888888);
+  const floor = createFloor(20, new THREE.Color('lightgreen'));
   scene.add(floor);
 
   // Add lighting
@@ -39,6 +39,7 @@ export default function init(canvas: HTMLCanvasElement) {
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
+  controls.maxPolarAngle = Math.PI / 2 - 0.1;
 
   // Renderer setup
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });

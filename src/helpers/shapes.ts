@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export function createCube(
   size: number = 1,
-  color: number = 0xff0000,
+  color: THREE.Color = new THREE.Color('red'),
   position: { x?: number; y?: number; z?: number } = {}
 ): THREE.Mesh {
   const geometry = new THREE.BoxGeometry(size, size, size);

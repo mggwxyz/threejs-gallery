@@ -2,7 +2,7 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { page } from '$app/stores';
-	import { galleryItems } from '$lib/gallery-config';
+	import { galleryItems } from '../gallery-config';
 
 	let { children } = $props();
 

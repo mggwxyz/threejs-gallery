@@ -5,7 +5,7 @@ import GUI from 'lil-gui';
 export default function init(canvas: HTMLCanvasElement) {
   // Scene setup
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x263238);
+  scene.background = new THREE.Color('white');
 
   // Create a more complex scene with multiple objects
   const objects: THREE.Mesh[] = [];
@@ -83,7 +83,7 @@ export default function init(canvas: HTMLCanvasElement) {
     cameraSettings.near,
     cameraSettings.far
   );
-  perspectiveCamera.position.set(5, 5, 8);
+  perspectiveCamera.position.set(2, 4, 4);
 
   // Orthographic Camera
   const aspect = canvas.clientWidth / canvas.clientHeight;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { galleryItems } from '$lib/gallery-config';
+	import { galleryItems } from '../gallery-config';
 
 	// Redirect to the first gallery item on mount
 	onMount(() => {
