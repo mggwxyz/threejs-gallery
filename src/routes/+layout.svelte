@@ -112,8 +112,8 @@
 
 	.mobile-menu-button {
 		position: fixed;
-		top: 1rem;
-		left: 1rem;
+		top: 1.5rem;
+		left: 1.5rem;
 		z-index: 50;
 		padding: 0.5rem;
 		border-radius: 0.5rem;
@@ -147,6 +147,7 @@
 		width: 16rem;
 		z-index: 40;
 		overflow-y: auto;
+		background-color: var(--pico-background-color);
 		border-right: 1px solid var(--pico-muted-border-color);
 		transition: transform 0.3s ease-in-out;
 
@@ -167,6 +168,10 @@
 			font-size: 1.5rem;
 			font-weight: bold;
 			margin-bottom: 2rem;
+
+			@media (max-width: 992px) {
+				margin-top: 4rem; /* Add space to avoid mobile menu button */
+			}
 		}
 
 		& h2 {
@@ -199,6 +204,10 @@
 			inset: 0;
 			background-color: rgba(0, 0, 0, 0.5);
 			z-index: 30;
+			border: none;
 		}
+	}
+	.nav-link, .resource-link {
+		margin-bottom: 0.5rem;
 	}
 </style>

@@ -100,6 +100,11 @@
 
 	.gallery-header {
 		padding: 1rem;
+
+		@media (max-width: 992px) {
+			padding-left: 5rem; /* Add left padding to avoid mobile menu button */
+		}
+
 		& h1 {
 			font-size: 1.5rem;
 			margin-bottom: 0.5rem;
