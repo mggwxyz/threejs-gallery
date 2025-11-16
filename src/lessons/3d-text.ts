@@ -88,22 +88,6 @@ export default function init(canvas: HTMLCanvasElement) {
     const donutRadius = 0.05;
     const donutInnerRadius = 0.03;
 
-    const donutGeometry = new THREE.TorusGeometry(donutRadius, donutInnerRadius);
-    // Now add donuts after text is loaded and bounding box is calculated
-    for(let i = 0; i < 100; i++) {
-      // Get a safe position that doesn't collide with text
-      const safePosition = getRandomSafePosition(donutRadius);
-
-      const randomDonutRotationX = randomNumber(0, Math.PI * 2);
-      const randomDonutRotationY = randomNumber(0, Math.PI * 2);
-      const randomDonutRotationZ = randomNumber(0, Math.PI * 2);
-
-      const donutMesh = new THREE.Mesh(donutGeometry, donutMaterial);
-      donutMesh.position.copy(safePosition);
-    
-      donutMesh.rotation.set(randomDonutRotationX, randomDonutRotationY, randomDonutRotationZ);
-      scene.add(donutMesh);
-    }
   });
 
   // Add lighting

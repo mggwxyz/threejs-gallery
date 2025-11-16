@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { page } from '$app/state';
-	import { getGalleryItem, type GalleryItem } from '../../../gallery/gallery-config';
+	import { getGalleryItem, type GalleryItem } from '../../../lessons/config';
 
 	const slug = $state(page.params.slug);
 
