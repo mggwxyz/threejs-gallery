@@ -33,7 +33,8 @@ export default function init(canvas: HTMLCanvasElement) {
 			},
 			textMaterial: new THREE.MeshMatcapMaterial({ matcap: matCapTexture })
 		});
-		 textMesh.position.set(0, 10, 0);
+		textMesh.castShadow = true;
+		textMesh.position.set(0, 10, 0);
 
 		textMesh.geometry.computeBoundingBox();
 		const boundingBox = textMesh.geometry.boundingBox;
