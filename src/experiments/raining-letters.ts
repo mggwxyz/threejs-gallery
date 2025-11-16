@@ -33,10 +33,7 @@ export default function init(canvas: HTMLCanvasElement) {
 			},
 			textMaterial: new THREE.MeshMatcapMaterial({ matcap: matCapTexture })
 		});
-
-		const mostRecentPhysicsBody = Array.from(scene.physicsBodies.keys()).pop();
-	
-		if (!mostRecentPhysicsBody) textMesh.position.set(0, 10, 0);
+		 textMesh.position.set(0, 10, 0);
 
 		textMesh.geometry.computeBoundingBox();
 		const boundingBox = textMesh.geometry.boundingBox;

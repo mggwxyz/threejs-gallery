@@ -33,6 +33,10 @@ export default function init(canvas: HTMLCanvasElement) {
 			color: prettyColors[i],
 			position: { x: randomNumber(-5, 15), y: randomNumber(5, 20), z: randomNumber(-5, 5) }
 		});
+		// Make colors brighter by reducing roughness
+		const material = sphere.material as THREE.MeshStandardMaterial;
+		material.roughness = 0.3;
+		material.metalness = 0.1;
 		scene.add(sphere);
 		spheres.push(sphere);
 	}
@@ -80,10 +84,10 @@ export default function init(canvas: HTMLCanvasElement) {
 	world.addBody(floorBody);
 
 	// Add lighting
-	const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+	const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 	scene.add(ambientLight);
 
-	const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
+	const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 	directionalLight.position.set(5, 10, 5);
 	directionalLight.castShadow = true;
 

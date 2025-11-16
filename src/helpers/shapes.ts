@@ -40,6 +40,8 @@ export function createSphere(options: CreateSphereOptions) {
   const material = new THREE.MeshStandardMaterial({
     color,
     map,
+    roughness: 0.1,
+    metalness: 0.1,
   });
   const sphere = new THREE.Mesh(geometry, material);
 

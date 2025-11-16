@@ -55,6 +55,20 @@ export default function init(canvas: HTMLCanvasElement) {
   const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
   directionalLight.position.set(5, 10, 5);
   directionalLight.castShadow = true;
+
+  // Configure shadow camera to cover the entire floor (50x50 units)
+  const floorHalfSize = 25;
+  directionalLight.shadow.camera.top = floorHalfSize;
+  directionalLight.shadow.camera.right = floorHalfSize;
+  directionalLight.shadow.camera.bottom = -floorHalfSize;
+  directionalLight.shadow.camera.left = -floorHalfSize;
+  directionalLight.shadow.camera.near = 0.5;
+  directionalLight.shadow.camera.far = 50;
+
+  // Shadow map resolution for better quality
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
+
   scene.add(directionalLight);
 
   // Camera setup
