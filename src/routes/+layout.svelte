@@ -2,7 +2,7 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { page } from '$app/stores';
-	import { galleryItems } from '../lessons/config';
+	import { galleryItems } from '../gallery-config';
 
 	let { children } = $props();
 
@@ -26,11 +26,11 @@
 		},
 		{
 			label: 'Three.js Journey',
-			href: 'https://threejs-journey.com/',
+			href: 'https://threejs-journey.com/'
 		},
 		{
 			label: 'GitHub',
-			href: 'https://github.com/mrdoob/three.js/',
+			href: 'https://github.com/mrdoob/three.js/'
 		}
 	];
 </script>
@@ -42,16 +42,22 @@
 
 <div class="layout-container">
 	<!-- Mobile menu button -->
-	<button
-		onclick={toggleMobileMenu}
-		class="mobile-menu-button"
-		aria-label="Toggle menu"
-	>
+	<button onclick={toggleMobileMenu} class="mobile-menu-button" aria-label="Toggle menu">
 		<svg class="icon" viewBox="0 0 24 24">
 			{#if isMobileMenuOpen}
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M6 18L18 6M6 6l12 12"
+				/>
 			{:else}
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M4 6h16M4 12h16M4 18h16"
+				/>
 			{/if}
 		</svg>
 	</button>
@@ -75,7 +81,7 @@
 				{/each}
 			</div>
 
-			<hr/>
+			<hr />
 
 			<!-- Footer links -->
 			<div class="resources-section">
@@ -97,11 +103,7 @@
 
 <!-- Mobile menu overlay -->
 {#if isMobileMenuOpen}
-	<button
-		onclick={toggleMobileMenu}
-		class="mobile-overlay"
-		aria-label="Close menu"
-	></button>
+	<button onclick={toggleMobileMenu} class="mobile-overlay" aria-label="Close menu"></button>
 {/if}
 
 <style>
@@ -188,8 +190,6 @@
 		padding: 1.5rem;
 	}
 
-
-
 	.main-content {
 		flex: 1;
 		overflow: hidden;
@@ -207,7 +207,8 @@
 			border: none;
 		}
 	}
-	.nav-link, .resource-link {
+	.nav-link,
+	.resource-link {
 		margin-bottom: 0.5rem;
 	}
 </style>

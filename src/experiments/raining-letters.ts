@@ -13,6 +13,8 @@ export default function init(canvas: HTMLCanvasElement) {
 	scene.scene.background = new THREE.Color('white');
 	scene.createPhysicsFloor(20);
 
+	const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
 	// Load matcap texture
 	const textureLoader = new THREE.TextureLoader();
 	const matCapTexture = textureLoader.load('/textures/matcaps/3.png');
@@ -38,6 +40,7 @@ export default function init(canvas: HTMLCanvasElement) {
 
 		textMesh.geometry.computeBoundingBox();
 		const boundingBox = textMesh.geometry.boundingBox;
+
 		if (!boundingBox) return;
 
 		const halfExtents = new CANNON.Vec3(
@@ -61,13 +64,18 @@ export default function init(canvas: HTMLCanvasElement) {
 		addText(e.key);
 	}
 
+	function onClickHandler() {
+		addText(letters[Math.floor(Math.random() * letters.length)]);
+	}
+
 	const fontLoader = new FontLoader();
 	fontLoader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
 		sceneFont = font;
 		if (sceneFont) {
 			// Add initial text on startup
-			addText('Type to make it rain');
+			addText('Type or click to make it rain');
 			window.addEventListener('keydown', onTypeHandler);
+			canvas.addEventListener('click', onClickHandler);
 		}
 		scene.start();
 	});

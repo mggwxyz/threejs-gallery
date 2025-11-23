@@ -1,13 +1,14 @@
 // Import all gallery modules
-import * as basicCube from './basic-cube';
-import * as cameras from './cameras';
-import * as transformObjects from './transform-objects';
-import * as animation from './animation';
-import * as textures from './textures';
-import * as threeDText from './3d-text';
-import * as physics from './physics';
-import * as physicsForces from './physics-forces';
-import * as rainingLetters from './../experiments/raining-letters';
+import * as basicCube from './lessons/basic-cube';
+import * as cameras from './lessons/cameras';
+import * as transformObjects from './lessons/transform-objects';
+import * as animation from './lessons/animation';
+import * as textures from './lessons/textures';
+import * as threeDText from './lessons/3d-text';
+import * as physics from './lessons/physics';
+import * as physicsForces from './lessons/physics-forces';
+import * as rainingLetters from './experiments/raining-letters';
+import * as cityscape from './experiments/cityscape';
 
 export type GalleryModule = {
 	default: (canvas: HTMLCanvasElement) => (() => void) | undefined;
@@ -74,6 +75,12 @@ export const galleryItems: GalleryItem[] = [
 		title: 'Raining Letters',
 		description: 'A raining letters experiment',
 		module: rainingLetters
+	},
+	{
+		id: 'cityscape',
+		title: 'Cityscape',
+		description: 'A cityscape experiment',
+		module: cityscape
 	}
 ];
 

@@ -67,6 +67,21 @@ export default class BaseScene {
 		const world = new CANNON.World();
 		world.gravity.set(0, -9.81, 0);
 
+		/**
+		 * Broadphase it the name of the algorithm used to detect collisions with objects in the scene.
+		 * Naive broadphase is default and will check all objects with every other object in the scene.
+		 * SAP broadphase is a more efficient algorithm that will check only the objects that are close to each other.	
+		 * https://github.com/pmndrs/cannon/blob/master/src/broadphase/SAPBroadphase.js
+		 */
+		world.broadphase = new CANNON.SAPBroadphase(world);
+
+		/**
+		 * Allow for sleeping bodies to be put to sleep when they are not moving.
+		 * This can improve performance by reducing the number of physics calculations.
+		 * https://github.com/pmndrs/cannon/blob/master/src/world/World.js
+		 */
+		world.allowSleep = true;
+
 		// Setup default physics materials
 		const defaultMaterial = new CANNON.Material('default');
 		const defaultContactMaterial = new CANNON.ContactMaterial(
@@ -113,6 +128,15 @@ export default class BaseScene {
 		this.scene.add(mesh);
 		this.world.addBody(body);
 		this.physicsBodies.set(mesh, body);
+	}
+
+	addObject(object: THREE.Object3D) {
+		this.scene.add(object);
+	}
+
+	// Add a group to the scene
+	addGroup(group: THREE.Group) {
+		this.scene.add(group);
 	}
 
 	// Create a physics floor

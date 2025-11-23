@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { page } from '$app/state';
-	import { getGalleryItem, type GalleryItem } from '../../../lessons/config';
+	import { getGalleryItem, type GalleryItem } from '../../../gallery-config';
 
 	const slug = $state(page.params.slug);
 
 	let canvas: HTMLCanvasElement;
 	let item: GalleryItem | undefined = $state(slug ? getGalleryItem(slug) : undefined);
 	let cleanup: (() => void) | undefined;
-
 
 	// Function to initialize the current gallery module
 	function initializeGallery(slug: string) {
@@ -21,7 +20,7 @@
 
 		// Clean up any remaining GUI elements
 		const existingGuis = document.querySelectorAll('.lil-gui');
-		existingGuis.forEach(gui => gui.remove());
+		existingGuis.forEach((gui) => gui.remove());
 
 		// Get the gallery item
 		const galleryItem = getGalleryItem(slug);
